@@ -1,0 +1,64 @@
+{include file="public/header"}
+
+<style type="text/css">
+    .mainbody {
+        margin-top: 20px;
+    }
+</style>
+<div class="am-g am-container mainbody">
+    <div class="am-u-sm-12 am-u-lg-4 am-u-lg-4">
+        <div class="am-panel am-panel-primary">
+            <div class="am-panel-hd">面板标题</div>
+            {eq name='isLogin' value='yes'}
+            <div class="am-panel-bd">
+                <img class="am-img-responsive" src="{$userInfo.avater}">
+            </div>
+            <ul class="am-list am-list-static am-list-border">
+                <li><h2>{$userInfo.username}</h2></li>
+                <li><span class="am-icon-envelope">
+          <a href="mailto:{$userInfo.email}"> {$userInfo.email}</a>
+        </span></li>
+                <li><span class="am-icon-link"> <a href="{$userInfo.link}"> {$userInfo.link}</a></span>
+                </li>
+            </ul>
+            {else/}
+            <div class="am-panel-bd">
+                <img class="am-img-responsive" src="http://www.php1.cn/uploads/article/feedpic/201705/592452200990b.jpeg">
+            </div>
+            {/eq}
+        </div>
+    </div>
+    <div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
+        <div class="am-panel am-panel-secondary">
+            <div class="am-panel-hd">每周工作简报</div>
+            <div class="am-panel-bd">
+                <ul class="am-list am-list-border am-list-striped">
+                    {volist name="work" id="vo"}
+                    <li style="font-size: 10px"><a href="{$vo.fileaddress}" download="{$vo.filename}">{$vo.filename}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+        <div class="am-panel am-panel-secondary">
+            <div class="am-panel-hd">任务代码</div>
+            <div class="am-panel-bd">
+                <ul class="am-list am-list-border am-list-striped">
+                    {volist name="code" id="vo"}
+                    <li style="font-size: 10px"><a href="{$vo.fileaddress}" download="{$vo.filename}">{$vo.filename}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+        <div class="am-panel am-panel-secondary">
+            <div class="am-panel-hd">请假条</div>
+            <div class="am-panel-bd">
+                <ul class="am-list am-list-border am-list-striped">
+                    {volist name="leave" id="vo"}
+                    <li style="font-size: 10px"><a href="{$vo.fileaddress}" download="{$vo.filename}">{$vo.filename}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="/public/footer"}

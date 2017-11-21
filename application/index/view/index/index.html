@@ -1,0 +1,106 @@
+{include file="public/header"}
+
+<style type="text/css">
+    .mainbody {
+        margin-top: 20px;
+    }
+</style>
+<div class="am-g am-container mainbody">
+    <div class="am-u-sm-12 am-u-lg-4 am-u-lg-4">
+        <div class="am-panel am-panel-primary">
+            <div class="am-panel-hd">用户信息</div>
+            {eq name='isLogin' value='yes'}
+            <div class="am-panel-bd">
+                <img class="am-img-responsive" src="{$userInfo.avater}">
+            </div>
+            <ul class="am-list am-list-static am-list-border">
+                <li><h2>{$userInfo.username}</h2></li>
+                <li><span class="am-icon-envelope">
+          <a href="mailto:{$userInfo.email}"> {$userInfo.email}</a>
+        </span></li>
+                <li><span class="am-icon-link"> <a href="{$userInfo.link}"> {$userInfo.link}</a></span>
+                </li>
+            </ul>
+            {else/}
+            <div class="am-panel-bd">
+                <img class="am-img-responsive" src="http://sshpark.oss-cn-shenzhen.aliyuncs.com/12326324,2560,1600.jpg">
+            </div>
+            {/eq}
+        </div>
+    </div>
+    <div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
+        <div class="am-tabs" data-am-tabs>
+            <ul class="am-tabs-nav am-nav am-nav-tabs">
+                <li class="am-active"><a href="#tab1">文件上传</a></li>
+                <li><a href="#tab2">任务代码提交</a></li>
+            </ul>
+
+            <div class="am-tabs-bd">
+                <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+                    <form method="post" action="{:url('/index/file/uploadFile')}" class="am-form" enctype="multipart/form-data">
+                        <div class="am-form-group">
+                            <h2>每周工作简报要求：</h2>
+                            <p style="font-size: 15px;">
+                                1、时间一栏填写每周开始至结束的时间，格式X月X日—X月X日。<br>
+                                2、前三栏的内容填写时标清序号，不需按照时间顺序填写。<br>
+                                3、简报填写时间为每周六，请如实填写。<br>
+                                4、成员统一在每周六下午16:00—18:00之间将简报电子版交到小组长处，小组长在20:00前收齐交由部长，若有周六下午和周日的工作可填写在下一周的简报上。<br><br>
+                                <span class="am-icon-link"><a href="http://sshpark.oss-cn-shenzhen.aliyuncs.com/download/%E5%8D%97%E6%98%8C%E5%A4%A7%E5%AD%A6%E6%96%B0%E5%AA%92%E4%BD%93%E5%B7%A5%E4%BD%9C%E5%AE%A4%E8%AF%B7%E5%81%87%E6%9D%A1%E6%A8%A1%E6%9D%BF.docx" download="请假条模版"> 请假条模版下载</a></span><br>
+                                <span class="am-icon-link"><a href="http://sshpark.oss-cn-shenzhen.aliyuncs.com/download/%E5%B0%8F%E7%BB%84%E6%88%90%E5%91%98%E6%AF%8F%E5%91%A8%E5%B7%A5%E4%BD%9C%E7%AE%80%E6%8A%A5.docx" download="每周工作简报模版"> 每周工作简报模版下载</a></span>
+                            </p>
+                        </div>
+
+                        <div class="am-spform-group">
+                            <input type="hidden" name="work" value="0">
+                            <select name="filetype" required>
+                                <option value="0">-=请选择上传类型=-</option>
+                                <option value="1">请假条</option>
+                                <option value="2">每周工作简报</option>
+                            </select>
+                            <span class="am-form-caret"></span>
+                        </div>
+                        <span class="am-form-caret"></span>
+                        <div class="am-form-group">
+                            <label for="files">选择文件</label>
+                            <input type="file" name="files">
+                        </div>
+
+                        <button class="am-btn am-btn-secondary" type="submit">提交</button>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="am-tab-panel am-fade" id="tab2">
+                    <h2>本周任务({$taskinfo.times})</h2>
+                    <img class="am-img-responsive" src="{$taskinfo.imgsrc}">
+                    <h3>注意！！！</h3>
+                    <p>
+                        1、不支持重新上传，请确保上传文件的正确。<br>
+                        2、请选择对应任务上传代码<br>
+                        3、若有任务无需提交代码，不必提交任何东西<br>
+                        4、可上传的文件有php, txt, zip, html, pdf, sql
+                    </p>
+                    <form method="post" action="{:url('/index/file/uploadFile')}" class="am-form" enctype="multipart/form-data">
+                        <div class="am-form-group">
+                            <input type="hidden" name="work" value="1">
+                            <select name="filetype" required>
+                                <option value="0">-=请选择上传任务=-</option>
+                                <option value="1">任务一</option>
+                                <option value="2">任务二</option>
+                                <option value="3">任务三</option>
+                                <option value="4">任务四</option>
+                            </select>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="files">选择文件</label>
+                            <input type="file" name="files" id="files">
+                        </div>
+
+                        <button class="am-btn am-btn-secondary" type="submit">提交</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="/public/footer"}

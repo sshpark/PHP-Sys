@@ -1,0 +1,76 @@
+{include file="public/header"}
+
+<style type="text/css">
+    .mainbody {
+        margin-top: 20px;
+    }
+</style>
+<div class="am-g am-container mainbody">
+    <div class="am-u-sm-12 am-u-lg-4 am-u-lg-4">
+        <div class="am-panel am-panel-primary">
+            <div class="am-panel-hd">面板标题</div>
+            {eq name='isLogin' value='yes'}
+            <div class="am-panel-bd">
+                <img class="am-img-responsive" src="{$userInfo.avater}">
+            </div>
+            <ul class="am-list am-list-static am-list-border">
+                <li><h2>{$userInfo.username}</h2></li>
+                <li><span class="am-icon-envelope">
+          <a href="mailto:{$userInfo.email}"> {$userInfo.email}</a>
+        </span></li>
+                <li><span class="am-icon-link"> <a href="{$userInfo.link}"> {$userInfo.link}</a></span>
+                </li>
+            </ul>
+            {else/}
+            <div class="am-panel-bd">
+                <img class="am-img-responsive" src="http://www.php1.cn/uploads/article/feedpic/201705/592452200990b.jpeg">
+            </div>
+            {/eq}
+        </div>
+    </div>
+    <div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
+        <hr/>
+        <form class="am-form" enctype="multipart/form-data" method="post" action="{:url('/index/user/updateUser')}">
+            <div class="am-form-group">
+                <label>选择头像</label>
+                <input type="file" name="avater">
+            </div>
+            <div class="am-g am-margin-top">
+                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                    用户名:
+                </div>
+                <div class="am-u-sm-8 am-u-md-4 am-u-end">
+                    <input type="text" name="login_name" class="am-input-sm">
+                </div>
+            </div>
+            <div class="am-g am-margin-top">
+                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                    密码:
+                </div>
+                <div class="am-u-sm-8 am-u-md-4 am-u-end">
+                    <input type="password" name="password" class="am-input-sm">
+                </div>
+            </div>
+            <div class="am-g am-margin-top">
+                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                    邮箱:
+                </div>
+                <div class="am-u-sm-8 am-u-md-4 am-u-end">
+                    <input type="email" name="email" class="am-input-sm">
+                </div>
+            </div>
+            <div class="am-g am-margin-top">
+                <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                    网站:
+                </div>
+                <div class="am-u-sm-8 am-u-md-4 am-u-end">
+                    <input type="text" name="link" class="am-input-sm">
+                </div>
+            </div>
+            <div class="am-margin">
+                <button class="am-btn am-btn-secondary" type="submit">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+{include file="/public/footer"}
