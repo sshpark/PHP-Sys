@@ -1,5 +1,4 @@
-ThinkPHP 5.0
+PHP Sys
 ===============
 
-[![GitHub release](https://img.shields.io/github/release/top-think/think.svg?maxAge=2592000)](https://github.com/sshpark/PHP-Sys)
-
+基于ThinkPHP5, AmazeUI2搭建的PHP管理系统。
