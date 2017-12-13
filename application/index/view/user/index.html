@@ -91,7 +91,7 @@
         var x = $("#submit");
         $("#submit").click(function() {
             var params = $("input").serialize();
-            var url = "/index/user/login";
+            var url = "__ROOT__/index/user/login";
 
             $.ajax({
                 type: "post",
