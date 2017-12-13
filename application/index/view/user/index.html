@@ -52,7 +52,8 @@
 </div>
 <div class="am-g">
     <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
-        <form method="post" class="am-form" action="/index/user/login">
+        <div class="am-form">
+            <p id="info"></p>
             <label for="user_name">用户名:</label>
             <input type="text" name="user_name" id="user_name" value="">
             <br>
@@ -65,10 +66,10 @@
             <!--</label>-->
             <br />
             <div class="am-cf">
-                <input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm am-fl">
+                <input id="submit" type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm am-fl">
                 <!--<input type="submit" name="" value="忘记密码 ^_^? " class="am-btn am-btn-default am-btn-sm am-fr">-->
             </div>
-        </form>
+        </div>
         <hr>
         <p>© 2017 <a href="http://www.yunshipei.com" target="_blank">AllMobilize, Inc.</a> Licensed under <a
                 href="http://opensource.org/licenses/MIT" target="_blank">MIT license</a>. by the PHP Team.</p>
@@ -84,6 +85,49 @@
 <script src="__STATIC__/js/jquery.min.js"></script>
 <!--<![endif]-->
 <script src="__STATIC__/js/amazeui.min.js"></script>
+
+<script>
+    $(function() {
+        var x = $("#submit");
+        $("#submit").click(function() {
+            var params = $("input").serialize();
+            var url = "/index/user/login";
+
+            $.ajax({
+                type: "post",
+                url: url,
+                dataType: "json",
+                data: params,
+                success: function(msg) {
+                    if (msg.status) {
+                        function jump(count) {
+                            window.setTimeout(function(){
+                                count--;
+                                if(count > 0) {
+                                    $('#num').attr('innerHTML', count);
+                                    jump(count);
+                                } else {
+                                    window.location.href = "/";
+                                }
+                            }, 1000);
+                        }
+                        var backdata = "登陆成功";
+                        $("#info").html(backdata);
+                        $("#info").css({color: "green"});
+                        jump(1);
+                    } else {
+                        var backdata = "用户名或密码错误";
+                        $("#info").html(backdata);
+                        $("#info").css({color: "red"});
+                    }
+                },
+                error: function(msg) {
+                    console.log(msg);
+                }
+            })
+        })
+    })
+</script>
 
 </body>
 </html>
