@@ -33,12 +33,11 @@ class User extends Controller
         if ($find != null) {
             Session::set('user_name', $find['real_name']);
             Session::set('user_id', $find['id']);
-            $this -> success('登陆成功', '/', 2, 2);
+            $arr['status'] = true;
         } else {
-            $this -> error('登陆失败', 'index/user', 2, 2);
+            $arr['status'] = false;
         }
-//          $password = $_POST['password'];
-//          echo $password;
+        echo json_encode($arr);
     }
 
     /**

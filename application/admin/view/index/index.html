@@ -91,7 +91,7 @@
                             <button type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>
                             <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 保存</button>
                             <button type="button" class="am-btn am-btn-default"><span class="am-icon-archive"></span> 审核</button>
-                            <button type="button" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
+                            <button id="doc-confirm-toggle" type="button" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
                         </div>
                     </div>
                 </div>
@@ -124,9 +124,9 @@
                                 <th class="table-check"><input type="checkbox" /></th><th class="table-id">ID</th><th class="table-title">标题</th><th class="table-type">类别</th><th class="table-author am-hide-sm-only">作者</th><th class="table-date am-hide-sm-only">修改日期</th><th class="table-set">操作</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="doc-modal-list">
                             {volist name="list" id="vo"}
-                            <tr>
+                            <tr id="data-{vo.id}">
                                 <td><input type="checkbox" /></td>
                                 <td>{$vo.id}</td>
                                 <td><a href="{$vo.fileaddress}" download="{$vo.filename}">{$vo.filename}</a></td>
@@ -140,9 +140,9 @@
                                 <td>
                                     <div class="am-btn-toolbar">
                                         <div class="am-btn-group am-btn-group-xs">
-                                            <button type="button" class="am-btn" id="doc-confirm-toggle">
-                                                <a href="/admin/index/del/id/{$vo.id}"><span class="am-icon-trash-o"></span> 删除</a>
-                                            </button>
+                                            <!--<a href="/admin/index/del/id/{$vo.id}"></a>-->
+                                            <a href="#" data-id={$vo.id}></a>
+                                            <span class="am-icon-trash-o"></span>
                                         </div>
                                     </div>
                                 </td>
@@ -174,6 +174,26 @@
     </div>
     <!-- content end -->
 
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">PHP Sys</div>
+            <div class="am-modal-bd">
+                你，确定要删除这条记录吗？
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
+
+    <button
+            type="button"
+            class="am-btn am-btn-warning"
+            id="doc-confirm">
+        Confirm
+    </button>
+
 </div>
 
 <a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
@@ -189,5 +209,37 @@
 <!--<![endif]-->
 <script src="__STATIC__/js/amazeui.min.js"></script>
 <script src="__STATIC__/js/app.js"></script>
+
+<script>
+    $(function() {
+        $('#doc-modal-list').find('.am-icon-trash-o').add('#doc-confirm').
+        on('click', function() {
+            $('#my-confirm').modal({
+                relatedTarget: this,
+                onConfirm: function(options) {
+                    var $link = $(this.relatedTarget).prev('a');
+                    var msg = $link.length ? '你要删除的链接 ID 为 ' + $link.data('id') :
+                        '确定了，但不知道要整哪样';
+                    $.ajax({
+                        type: "get",
+                        url: "/admin/index/del/id/" + $link.data('id'),
+                        dataType: "json",
+                        success: function (msg) {
+                            console.log($link.data('id'));
+                            $('#data-'+$link.data('id')).remove();
+                            alert("ok");
+                        },
+                        error: function (msg) {
+                            console.log($link.data('id'));
+                            alert("haha");
+                        }
+
+                    })
+                },
+
+            });
+        });
+    });
+</script>
 </body>
 </html>
